@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var massive = require('massive');
+const _ = require('lodash');
 var port = 3000;
 
 var db = massive.connectSync({
@@ -46,7 +47,19 @@ app.get('/incidents', function(req, res) {
 });
 
 app.post('/incidents', function(req, res) {
-  res.send({id: 123});
+  let state = req.body.state;
+  let injuryId = req.body.injuryId;
+  let causeId = req.body.causeId;
+
+  db.createIncident([state, injuryId, causeId], function(err, result){
+
+  })
+
+  db.getAllIncidents(function(err, incidents){
+      return res.send(incidents);
+  })
+
+  
 });
 
 
